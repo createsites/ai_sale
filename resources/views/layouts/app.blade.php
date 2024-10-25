@@ -23,11 +23,22 @@
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @livewire('navigation-menu')
 
+            <header class="bg-white dark:bg-gray-800 shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <p>Баланс кредитов: {{ auth()->user()->credits->amount ?? 0 }} </p>
+                </div>
+            </header>
+
             <!-- Page Heading -->
-            @if (isset($header))
+            @if (isset($additional_header))
+                <?php
+                // для вывода этого блока нужно в файле, который подключает layout создать
+                // элемент <x-slot name="additional_header">
+                // например в dashboard.blade.php
+                ?>
                 <header class="bg-white dark:bg-gray-800 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                        {{ $additional_header }}
                     </div>
                 </header>
             @endif

@@ -35,6 +35,7 @@ return [
         ],
     ],
 
+    // настройки https://console.cloud.google.com/apis/credentials/oauthclient/221134086272-5b15m28hi6vks2erja4mmnmq4bhferi7.apps.googleusercontent.com?organizationId=0&project=api-project-221134086272
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
