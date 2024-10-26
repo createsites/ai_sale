@@ -18,6 +18,13 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
+
+        @if (session('success'))
+            <div class="hide_after_delay fixed top-20 right-5 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <x-banner />
 
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">

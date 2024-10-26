@@ -23,7 +23,7 @@ class CreditController extends Controller
         $credit = Credit::firstOrCreate(['user_id' => $user->id]);
         $credit->increment('amount', $request->amount);
 
-        return redirect()->back()->with('success', 'Ваши кредиты успешно пополнены!');
+        return redirect(route('dashboard'))->with('success', 'Ваши кредиты успешно пополнены!');
     }
 }
 

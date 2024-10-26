@@ -5,3 +5,9 @@
 [x-cloak] {
     display: none;
 }
+
+.hide_after_delay {
+    opacity: 1;
+    transform: translateX(-20px);
+    transition: transform 0.5s ease, opacity .6s ease;
+}
