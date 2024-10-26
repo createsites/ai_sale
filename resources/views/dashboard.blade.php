@@ -1,11 +1,12 @@
 <x-app-layout>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                <x-welcome />
-            </div>
+        <div class="max-w-7xl mx-auto pb-6 sm:px-6 lg:px-8">
+            @include('chat.form')
         </div>
+
+
     </div>
+
 
 {{--    @push('modals')--}}
 {{--        <div class="fixed inset-0 flex items-center justify-center z-50">--}}
