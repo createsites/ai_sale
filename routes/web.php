@@ -21,10 +21,6 @@ Route::middleware([
     Route::get('/credits/topup', [CreditController::class, 'showTopUpForm'])->name('credits.topup');
     Route::post('/credits/topup', [CreditController::class, 'topUpCredits'])->name('credits.process');
 
-    Route::get('/chat', function () {
-        return view('chat.form');
-    });
-    Route::post('/chat/ask', [ChatController::class, 'ask'])->name('chat.ask');
 });
 
 Route::get('auth/google', [GoogleController::class, 'redirect'])->name('google.login');
