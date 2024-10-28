@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Message;
 use App\Services\FakeOpenAIService;
 use Livewire\Component;
 
@@ -25,7 +26,7 @@ class Chat extends Component
                 session()->forget('chat_id');
             }
         }
-
+        // в сессии ид чата нет - создаем его
         if (!$chatId) {
             // test
             // todo определять имя чата
@@ -36,7 +37,8 @@ class Chat extends Component
             // запоминаем в сессии
             session(['chat_id' => $chat->id]);
         }
-
+        // список чатов
+        // todo выводить последние
         $this->chats[] = $chat;
     }
 
@@ -48,9 +50,14 @@ class Chat extends Component
 
         // получаем ответ от ИИ
         $openAIService = new FakeOpenAIService();
-        $this->response[] = $openAIService->getChatGPTResponse($this->message);
+        $response = $openAIService->getChatGPTResponse($this->message);
+        $this->response[] = $response;
 
-        // сохраняем в базе
+        // сохраняем сообщение в базе
+        Message::create([
+            'chat_id' => session('chat_id', null),
+            'content' => $response,
+        ]);
 
         // Очищаем поле после отправки
         $this->message = '';

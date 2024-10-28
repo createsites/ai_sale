@@ -9,6 +9,9 @@ class Message extends Model
 {
     use HasFactory;
 
+    // Используем поле created_at, но отключаем updated_at
+    const UPDATED_AT = null;
+
     protected $fillable = ['content', 'chat_id'];
 
     // Одно сообщение принадлежит одному чату
