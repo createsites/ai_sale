@@ -38,8 +38,13 @@ class Chat extends Component
             session(['chat_id' => $chat->id]);
         }
         // список чатов
-        // todo выводить последние
-        $this->chats[] = $chat;
+        // последние
+        $this->chats = \App\Models\Chat::orderBy('created_at', 'desc') // Сортировка по новизне
+            ->take(10) // Ограничиваем до 10 записей
+            ->get()
+            ->all(); // коллекцию в массив
+        // текущий
+        array_unshift($this->chats, $chat);
     }
 
     public function sendMessage()
