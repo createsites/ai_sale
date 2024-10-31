@@ -31,7 +31,7 @@ class Chat extends Component
             // test
             // todo определять имя чата
             $chat = new \App\Models\Chat();
-            $chat->name = 'Test name 3';
+            $chat->name = 'New chat';
             $chat->user_id = auth()->user()->id;
             $chat->save();
             // запоминаем в сессии
