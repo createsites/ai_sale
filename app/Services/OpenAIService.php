@@ -6,14 +6,29 @@ use OpenAI;
 
 class OpenAIService
 {
-    protected $client;
+    private $client;
+    private $error;
 
     public function __construct()
     {
         $this->client = OpenAI::client(config('services.openai.key'));
     }
 
-    public function getChatGPTResponse(string $message): string
+    /**
+     * Делаем запрос к чату по апи
+     * @param string $message текст вопроса
+     * @return false | \OpenAI\Responses\Chat\CreateResponse
+     * Если произошла ошибка - возвращаем строку с ошибкой
+     * Успешно - структуру ответа от чата
+     * В структуре могут содержаться несколько вариантов ответов, пока по умолчанию выбираем первый $response['choices']
+     * Есть инфа о кол-ве входящих и исходящих токенов
+     * исходящие токены $response['usage']['prompt_tokens']
+     * входящие токены $response['usage']['completion_tokens']
+     * инфа о модели $response['model']
+     * здесь сказано что ответ корректно завершился $response['choices'][0][finishReason] = 'stop', возможно это в будущем надо обрабатывать
+     * время исполнения запроса $response['meta']['processingMs']
+     */
+    public function getChatGPTResponse(string $message)
     {
         try {
             $response = $this->client->chat()->create(
@@ -26,9 +41,24 @@ class OpenAIService
             );
         } catch (OpenAI\Exceptions\ErrorException $e) {
             // скорее всего кончились деньги
-            return 'Превышен лимит запросов к API. Пожалуйста, попробуйте позже или обратитесь в поддержку.';
+            if (false !== strpos($e->getMessage(), 'You exceeded your current quota')) {
+                $this->error = 'Превышен лимит запросов к API. Пожалуйста, попробуйте позже или обратитесь в поддержку.';
+            }
+            // неизвестная ошибка
+            else {
+                $this->error = 'Сервис временно недоступен. ' . $e->getMessage();
+            }
+            return false;
         }
 
-        return $response['choices'][0]['message']['content'] ?? 'Нет ответа';
+        return $response;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getError()
+    {
+        return $this->error;
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Adapters\OpenAiAdapter;
 use App\Models\Message;
 use App\Services\FakeOpenAIService;
+use App\Services\OpenAIService;
 use Livewire\Component;
 
 class Chat extends Component
@@ -50,18 +52,29 @@ class Chat extends Component
     public function sendMessage()
     {
         $this->validate([
-            'message' => 'required|string|max:255|min:3',
+            'message' => 'required|string|max:255|min:2',
         ]);
 
         // получаем ответ от ИИ
-        $openAIService = new FakeOpenAIService();
-        $response = $openAIService->getChatGPTResponse($this->message);
-        $this->response[] = $response;
+        $openAIService = new OpenAIService();
+        $openAiResponse = $openAIService->getChatGPTResponse($this->message);
+
+        // пришел ли объект от чата в ответ
+        if ($openAiResponse) {
+            $response = new OpenAiAdapter($openAiResponse);
+            $this->response[] = $response->getMessage();
+        }
+        else {
+            $this->response[] = 'Ошибка сервера.';
+            logger($openAIService->getError());
+            return false;
+        }
 
         // сохраняем сообщение в базе
         Message::create([
             'chat_id' => session('chat_id', null),
-            'content' => $response,
+            'content' => $response->getMessage(),
+            'tokens' => $response->getInputTokens(),
         ]);
 
         // Очищаем поле после отправки
