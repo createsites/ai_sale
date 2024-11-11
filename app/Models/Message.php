@@ -12,7 +12,7 @@ class Message extends Model
     // Используем поле created_at, но отключаем updated_at
     const UPDATED_AT = null;
 
-    protected $fillable = ['content', 'chat_id', 'tokens'];
+    protected $fillable = ['content', 'chat_id', 'tokens', 'response_for'];
 
     // Одно сообщение принадлежит одному чату
     public function chat()

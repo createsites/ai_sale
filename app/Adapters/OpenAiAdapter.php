@@ -22,4 +22,9 @@ class OpenAiAdapter
     {
         return $this->openAiResponse['usage']['prompt_tokens'];
     }
+
+    public function getOutputTokens()
+    {
+        return $this->openAiResponse['usage']['completion_tokens'];
+    }
 }

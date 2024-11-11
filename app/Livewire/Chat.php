@@ -30,8 +30,8 @@ class Chat extends Component
         }
         // в сессии ид чата нет - создаем его
         if (!$chatId) {
-            // test
             // todo определять имя чата
+            // todo сделать имя nullable и оставлять пустым у текущих чатов созданных автоматом
             $chat = new \App\Models\Chat();
             $chat->name = 'New chat';
             $chat->user_id = auth()->user()->id;
@@ -39,14 +39,13 @@ class Chat extends Component
             // запоминаем в сессии
             session(['chat_id' => $chat->id]);
         }
-        // список чатов
-        // последние
-        $this->chats = \App\Models\Chat::orderBy('created_at', 'desc') // Сортировка по новизне
+        // список последних чатов
+        // переменная $this->chats транслируется в шаблон
+        $this->chats = \App\Models\Chat::orderBy('created_at', 'desc')
             ->take(10) // Ограничиваем до 10 записей
             ->get()
             ->all(); // коллекцию в массив
-        // текущий
-        array_unshift($this->chats, $chat);
+        // todo проходиться по всем чатам, кроме текущего, и для безымянных присваивать имя из первого сообщения
     }
 
     public function sendMessage()
@@ -70,11 +69,21 @@ class Chat extends Component
             return false;
         }
 
+        // списываем с баланса токены вопроса и ответа
+
         // сохраняем сообщение в базе
+        $message = Message::create([
+            'chat_id' => session('chat_id', null),
+            'content' => $this->message,
+            'tokens' => $response->getInputTokens(),
+        ]);
+
+        // сохраняем ответ чата
         Message::create([
             'chat_id' => session('chat_id', null),
             'content' => $response->getMessage(),
-            'tokens' => $response->getInputTokens(),
+            'tokens' => $response->getOutputTokens(),
+            'response_for' => $message->id,
         ]);
 
         // Очищаем поле после отправки
