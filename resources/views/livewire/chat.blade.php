@@ -8,10 +8,17 @@
         <ul>
             @foreach ($chats as $chat)
                 <li class="mb-2">
-                    <a href="#" wire:click.prevent="openChat({{ $chat->id }})"
-                       class="{{ $currentChatId == $chat->id ? 'border-indigo-400' : '' }} border block bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded">
-                        {{ $chat->name ?? 'Новый чат' }}
+                    @if ($currentChatId == $chat->id)
+                    <a href="#"
+                       class="border-indigo-400 border block bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded">
+                        {{ $chat->name ?? 'Текущий чат' }}
                     </a>
+                    @else
+                    <a href="#" wire:click.prevent="openChat({{ $chat->id }})"
+                       class="border block bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded">
+                        {{ $chat->name ?? 'Чат ' . $chat->created_at }}
+                    </a>
+                    @endif
                 </li>
             @endforeach
         </ul>

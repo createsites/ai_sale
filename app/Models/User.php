@@ -69,4 +69,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Credit::class);
     }
+
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
+
+    public function lastChat()
+    {
+        return $this->hasMany(Chat::class)->latest();
+    }
 }

@@ -84,6 +84,15 @@ class Chat extends Component
         $this->currentChatId = $chatService->getChat()->id;
         // Обновляем список чатов
         $this->chats = $chatService->getLastChats();
+        // очищаем список ответов чата
+        $this->response = [];
+    }
+
+    public function renameChat()
+    {
+        $chatService = new ChatService();
+
+        $chatService->renameChat();
     }
 
     public function render()
