@@ -31,6 +31,8 @@ class Chat extends Component
         // список последних чатов
         // переменная $this->chats транслируется в шаблон
         $this->chats = $chatService->getLastChats();
+        // выводим историю сообщений
+        $this->response = $chatService->getChat()->messages;
     }
 
     public function sendMessage()
@@ -46,10 +48,9 @@ class Chat extends Component
         // пришел ли объект от чата в ответ
         if ($openAiResponse) {
             $response = new OpenAiAdapter($openAiResponse);
-            $this->response[] = $response->getMessage();
         }
         else {
-            $this->response[] = 'Ошибка сервера.';
+            // todo выводить ошибку
             logger($openAIService->getError());
             return false;
         }
@@ -58,18 +59,22 @@ class Chat extends Component
 
         // сохраняем сообщение в базе
         $message = Message::create([
-            'chat_id' => session('chat_id', null),
+            'chat_id' => $this->currentChatId,
             'content' => $this->message,
             'tokens' => $response->getInputTokens(),
         ]);
 
         // сохраняем ответ чата
-        Message::create([
-            'chat_id' => session('chat_id', null),
+        $responseMessage = Message::create([
+            'chat_id' => $this->currentChatId,
             'content' => $response->getMessage(),
             'tokens' => $response->getOutputTokens(),
             'response_for' => $message->id,
         ]);
+
+        // добавляем в чат
+        $this->response[] = $message;
+        $this->response[] = $responseMessage;
 
         // Очищаем поле после отправки
         $this->message = '';

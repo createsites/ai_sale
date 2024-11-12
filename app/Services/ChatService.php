@@ -8,7 +8,7 @@ class ChatService
 {
     const SESSION_KEY = 'chat_id';
     const LAST_CHATS_LIMIT = 10;
-    const AUTO_NAME_SYMBOLS = 35;
+    const AUTO_NAME_SYMBOLS = 55;
 
     private $chat;
 
