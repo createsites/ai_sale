@@ -95,6 +95,23 @@ class Chat extends Component
         $chatService->renameChat();
     }
 
+    public function openChat($chatId)
+    {
+        $chat = (new ChatService($chatId))->getChat();
+
+        if ($chat) {
+
+            // перестраиваем дерево чатов
+            $this->currentChatId = $chat->id;
+            $this->chats = $this->chats;
+
+            // выводим историю сообщений
+            $this->response = Message::where('chat_id', $chat->id)
+                ->orderBy('created_at')
+                ->get();;
+        }
+    }
+
     public function render()
     {
         return view('livewire.chat');

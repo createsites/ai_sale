@@ -6,19 +6,21 @@
            class="block bg-blue-500 hover:bg-blue-600 text-white p-2 mb-3 text-center rounded">
             Создать новый</a>
         <ul>
-            @foreach ($chats as $chat)
+            @foreach ($chats as $index => $chat)
                 <li class="mb-2">
                     @if ($currentChatId == $chat->id)
                     <a href="#"
                        class="border-indigo-400 border block bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded">
-                        {{ $chat->name ?? 'Текущий чат' }}
-                    </a>
                     @else
                     <a href="#" wire:click.prevent="openChat({{ $chat->id }})"
                        class="border block bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded">
-                        {{ $chat->name ?? 'Чат ' . $chat->created_at }}
-                    </a>
                     @endif
+                        @if ($chat->name)
+                            {{ $chat->name }}
+                        @else
+                            {{ $index ? 'Чат #' . $chat->id : 'Текущий чат' }}
+                        @endif
+                    </a>
                 </li>
             @endforeach
         </ul>
@@ -42,11 +44,13 @@
         @enderror
 
         @if ($response)
-            @foreach ($response as $message)
-            <div class="response bg-gray-100 p-4 border border-gray-300 rounded mt-4">
-                <p>{{ $message }}</p>
+            <div class="flex flex-col">
+                @foreach ($response as $message)
+                <div class="@if (!$message->response_for) w-1/2 self-end @endif bg-gray-100 p-4 border border-gray-300 rounded mt-4">
+                    {{ $message->content }}
+                </div>
+                @endforeach
             </div>
-            @endforeach
         @endif
     </div>
 </div>

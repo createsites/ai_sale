@@ -12,15 +12,27 @@ class ChatService
 
     private $chat;
 
-    public function __construct()
+    public function __construct($chatId = false)
     {
-        // пытаемся получить из сессии
-        $this->chat = $this->getFromSession();
+        // работаем с текущим чатом
+        if (!$chatId) {
+            // пытаемся получить из сессии
+            $this->chat = $this->getFromSession();
 
-        // в сессии ид чата нет - создаем его
-        if (!$this->chat || $this->isExpired()) {
-            $this->add();
+            // в сессии ид чата нет - создаем его
+            if (!$this->chat || $this->isExpired()) {
+                $this->add();
+            }
         }
+        // открываем по id
+        else {
+            $chat = \App\Models\Chat::find($chatId);
+            if (!$chat || $chat->user->id !== auth()->user()->id) {
+                return false;
+            }
+            $this->chat = $chat;
+        }
+        return true;
     }
 
     private function getFromSession()
@@ -45,8 +57,8 @@ class ChatService
         // если текущего чата нет в сессии, ищем последний
         if (!$this->chat) {
             $lastChat = auth()->user()->lastChat;
-            if ($lastChat) {
-                $this->chat = $lastChat;
+            if ($lastChat->count() > 0) {
+                $this->chat = $lastChat->first();
             }
         }
 
