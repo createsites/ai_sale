@@ -43,7 +43,17 @@ class Chat extends Component
 
         // получаем ответ от ИИ
         $openAIService = new OpenAIService();
-        $openAiResponse = $openAIService->getChatGPTResponse($this->message);
+        // ему нужно каждый раз отправлять весь контекст в сообщении
+        // поэтому подготавливаем массив из истории
+        $context = $openAIService->makeContextFromMessages($this->response);
+
+        // и добавляем отправляемое сообщение $this->message
+        $context[] = [
+            'role' => OpenAIService::USER_ROLE,
+            'content' => $this->message,
+        ];
+
+        $openAiResponse = $openAIService->getChatGPTResponse($context);
 
         // пришел ли объект от чата в ответ
         if ($openAiResponse) {
