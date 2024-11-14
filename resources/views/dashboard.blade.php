@@ -1,14 +1,9 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto pb-6 sm:px-6 lg:px-8">
-            <div class="container mx-auto">
-                <livewire:chat />
-            </div>
+            <livewire:chat />
         </div>
-
-
     </div>
-
 
 {{--    @push('modals')--}}
 {{--        <div class="fixed inset-0 flex items-center justify-center z-50">--}}

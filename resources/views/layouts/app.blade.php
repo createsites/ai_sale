@@ -16,6 +16,8 @@
 
         <!-- Styles -->
         @livewireStyles
+
+        @yield('styles')
     </head>
     <body class="font-sans antialiased">
 
@@ -59,5 +61,7 @@
         @stack('modals')
 
         @livewireScripts
+
+    @yield('scripts')
     </body>
 </html>
