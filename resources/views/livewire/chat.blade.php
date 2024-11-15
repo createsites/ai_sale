@@ -67,10 +67,6 @@
 
 @script
 <script>
-    // первая инициализация компонента
-    Livewire.hook('element.init', ({ component, el }) => {
-
-    })
     // событие обновления компонентов на странице
     Livewire.hook('morph.updated', ({ el, component }) => {
         // ловим нужный элемент DOM с историей чата

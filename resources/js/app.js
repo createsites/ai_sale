@@ -14,6 +14,12 @@ document.addEventListener("DOMContentLoaded", function () {
             element.style.opacity = "0";
         });
     }, 2500); // Задержка перед исчезновением в 3 секунды
+
+    // подсвечивать синтаксис чата при первой загрузке страницы
+    const chatHistory = document.getElementById('chat_history');
+    if (chatHistory) {
+        highlightResponse(chatHistory);
+    }
 });
 
 
