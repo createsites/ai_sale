@@ -11,3 +11,20 @@
     transform: translateX(-20px);
     transition: transform 0.5s ease, opacity .6s ease;
 }
+
+#request_ai.fixed {
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 15px 30px;
+}
+
+ol li {
+    list-style: decimal;
+    margin: 1em 0 1em 2em;
+}
+
+ol li::marker {
+    color: indigo;
+}

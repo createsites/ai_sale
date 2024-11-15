@@ -51,43 +51,16 @@
                 @foreach ($response as $message)
                     @if (!$message->response_for)
                     <div class="w-1/2 self-end rounded-tl-[15px] rounded-bl-[15px] rounded-br-[15px] bg-gray-100 p-4 border border-gray-300 mt-4">
+                        {{ $message->content }}
                     @else
                     <div class="p-4 mt-4">
+                        <div class="response_ai">
+                            {{ $message->content }}
+                        </div>
                     @endif
-                        {{ $message->content }}
                     </div>
                 @endforeach
             </div>
         @endif
     </div>
 </div>
-
-@section('styles')
-    <style>
-        #request_ai.fixed {
-            left: 0;
-            top: 0;
-            width: 100%;
-            background-color: #fff;
-            padding: 15px 30px;
-        }
-    </style>
-@endsection
-
-@section('scripts')
-    <script type="text/javascript">
-        // Прилепляем форму для вопроса ИИ сверху при прокрутке страницы
-        // величина скролла, при которой форма станет position: fixed
-        const SCROLL_POINT = 330;
-        const requestForm = document.getElementById('request_ai');
-
-        window.addEventListener('scroll', function() {
-            if (window.scrollY >= SCROLL_POINT) {
-                requestForm.classList.add('fixed');
-            }
-            else {
-                requestForm.classList.remove('fixed');
-            }
-        });
-    </script>
-@endsection
