@@ -36,7 +36,7 @@ class OpenAIService
         try {
             $response = $this->client->chat()->create(
                 [
-                    'model' => 'gpt-3.5-turbo', // или "gpt-4" при наличии доступа
+                    'model' => 'gpt-4o-mini', // или "gpt-3.5-turbo"
                     // массив с сообщениями вида
                     // [['role' => 'user', 'content' => $message]]
                     // role может быть user или assistant

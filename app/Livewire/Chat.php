@@ -5,8 +5,8 @@ namespace App\Livewire;
 use App\Adapters\OpenAiAdapter;
 use App\Models\Message;
 use App\Services\ChatService;
-use App\Services\FakeOpenAIService;
 use App\Services\OpenAIService;
+use App\Services\PaymentService;
 use Livewire\Component;
 
 class Chat extends Component
@@ -46,13 +46,13 @@ class Chat extends Component
         // ему нужно каждый раз отправлять весь контекст в сообщении
         // поэтому подготавливаем массив из истории
         $context = $openAIService->makeContextFromMessages($this->response);
-
         // и добавляем отправляемое сообщение $this->message
         $context[] = [
             'role' => OpenAIService::USER_ROLE,
             'content' => $this->message,
         ];
 
+        // отправка в chatGpt
         $openAiResponse = $openAIService->getChatGPTResponse($context);
 
         // пришел ли объект от чата в ответ
@@ -66,6 +66,10 @@ class Chat extends Component
         }
 
         // списываем с баланса токены вопроса и ответа
+        PaymentService::spend([
+            'input' => $response->getInputTokens(),
+            'output' => $response->getOutputTokens()
+        ]);
 
         // сохраняем сообщение в базе
         $message = Message::create([
