@@ -49,15 +49,14 @@
         @if ($response)
             <div id="chat_history" class="flex flex-col">
                 @foreach ($response as $message)
-                    @if (!$message->response_for)
-                    <div class="w-1/2 self-end rounded-tl-[15px] rounded-bl-[15px] rounded-br-[15px] bg-gray-100 p-4 border border-gray-300 mt-4">
-                        {{ $message->content }}
-                    @else
-                    <div class="p-4 mt-4">
+                    <div class="@if (!$message->response_for)w-1/2 self-end rounded-tl-[15px] rounded-bl-[15px] rounded-br-[15px] bg-gray-100 border border-gray-300 @endif p-4 mt-4">
+                        @if ($message->response_for)
                         <div class="response_ai">
+                        @endif
                             {{ $message->content }}
+                        @if ($message->response_for)
                         </div>
-                    @endif
+                        @endif
                     </div>
                 @endforeach
             </div>
