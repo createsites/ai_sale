@@ -46,12 +46,24 @@ const marked = new Marked(
     })
 );
 
-const inputAiRequest = document.getElementById('message');
-inputAiRequest.addEventListener('focusin', function () {
-    document.querySelectorAll('.response_ai').forEach(function(elem) {
+// подсветка синтаксиса
+const highlightResponse = function(elem = document) {
+    elem.querySelectorAll('.response_ai').forEach(function(elem) {
         // innerHTML заменяет символ > на &gt;
         // чтобы избежать этого, используем textContent
         // innerText тоже помогает, но он не сохраняет форматирование (отступы)
         elem.innerHTML = marked.parse(elem.textContent.trim());
     });
+}
+
+// ловим кастомный event из chat.blade.php
+document.addEventListener('chat.updated', function(e) {
+    // новый элемент чата приходит в событии
+    const chatHistory = e.detail.elem;
+    // подсвечиваем
+    // без задержки не работает
+    // querySelectorAll('.response_ai') не находит ничего
+    setTimeout(() => {
+        highlightResponse(chatHistory);
+    }, 100)
 });

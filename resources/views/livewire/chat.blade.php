@@ -47,7 +47,7 @@
         @enderror
 
         @if ($response)
-            <div class="flex flex-col">
+            <div id="chat_history" class="flex flex-col">
                 @foreach ($response as $message)
                     @if (!$message->response_for)
                     <div class="w-1/2 self-end rounded-tl-[15px] rounded-bl-[15px] rounded-br-[15px] bg-gray-100 p-4 border border-gray-300 mt-4">
@@ -64,3 +64,24 @@
         @endif
     </div>
 </div>
+
+
+@script
+<script>
+    // первая инициализация компонента
+    Livewire.hook('element.init', ({ component, el }) => {
+
+    })
+    // событие обновления компонентов на странице
+    Livewire.hook('morph.updated', ({ el, component }) => {
+        // ловим нужный элемент DOM с историей чата
+        if (el.id === 'chat_history') {
+            const customEvent = new CustomEvent('chat.updated', {
+                // передаем DOM элемент
+                detail: { elem: el }
+            });
+            document.dispatchEvent(customEvent);
+        }
+    })
+</script>
+@endscript
