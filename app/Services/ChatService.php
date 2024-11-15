@@ -7,7 +7,7 @@ namespace App\Services;
 class ChatService
 {
     const SESSION_KEY = 'chat_id';
-    const LAST_CHATS_LIMIT = 10;
+    const LAST_CHATS_LIMIT = 15;
     const AUTO_NAME_SYMBOLS = 55;
 
     private $chat;
@@ -97,7 +97,8 @@ class ChatService
 
     public function getLastChats()
     {
-        return \App\Models\Chat::orderBy('created_at', 'desc')
+        return \App\Models\Chat::where('user_id', auth()->user()->id)
+            ->orderBy('created_at', 'desc')
             ->take(static::LAST_CHATS_LIMIT)
             ->get()
             ->all(); // коллекцию в массив
