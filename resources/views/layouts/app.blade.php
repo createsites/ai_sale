@@ -73,12 +73,12 @@
                     // при инициализации задаем баланс из php
                     // это округленный баланс, он выводится на странице
                     balance: {{
-                        auth()->user()->credits->amount
+                        auth()->user()->credits
                             ? round(auth()->user()->credits->amount, 2)
                             : 0
                         }},
                     // неокругленное значение баланса, чтобы правильно считать
-                    realBalance: {{ auth()->user()->credits->amount ?? 0 }},
+                    realBalance: {{ auth()->user()->credits ? auth()->user()->credits->amount : 0 }},
                     init() {
                         // событие обновления баланса
                         // оно диспатчится в php в livewire компоненте Chat

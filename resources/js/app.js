@@ -28,14 +28,15 @@ document.addEventListener("DOMContentLoaded", function () {
 const SCROLL_POINT = 330;
 const requestForm = document.getElementById('request_ai');
 
-window.addEventListener('scroll', function() {
-    if (window.scrollY >= SCROLL_POINT) {
-        requestForm.classList.add('fixed');
-    }
-    else {
-        requestForm.classList.remove('fixed');
-    }
-});
+if (requestForm) {
+    window.addEventListener('scroll', function () {
+        if (window.scrollY >= SCROLL_POINT) {
+            requestForm.classList.add('fixed');
+        } else {
+            requestForm.classList.remove('fixed');
+        }
+    });
+}
 
 // Оформление ответов чата
 // Преобразование markdown в HTML
