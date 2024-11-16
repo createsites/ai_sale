@@ -10,12 +10,14 @@ class PaymentService
     const PRICE_OUTPUT_TOKENS = 600; // 1М входящих
     const PRICE_PER = 1000000; // цена за 1М
 
-    public static function costInput($tokens)
+    private $wasSpent;
+
+    public function costInput($tokens)
     {
         return (static::PRICE_INPUT_TOKENS / static::PRICE_PER) * $tokens;
     }
 
-    public static function costOutput($tokens)
+    public function costOutput($tokens)
     {
         return (static::PRICE_OUTPUT_TOKENS / static::PRICE_PER) * $tokens;
     }
@@ -24,17 +26,26 @@ class PaymentService
      * Списывает со счета баланс
      * @param array $tokens с ключами input и/или output
      */
-    public static function spend(array $tokens)
+    public function spend(array $tokens)
     {
         $credits = auth()->user()->credits;
 
         if (isset($tokens['input'])) {
-            $credits->amount -= static::costInput($tokens['input']);
+            $cost = $this->costInput($tokens['input']);
+            $credits->amount -= $cost;
+            $this->wasSpent += $cost;
         }
         if (isset($tokens['output'])) {
-            $credits->amount -= static::costOutput($tokens['output']);
+            $cost = $this->costOutput($tokens['output']);
+            $credits->amount -= $cost;
+            $this->wasSpent += $cost;
         }
 
         $credits->save();
+    }
+
+    public function wasSpent()
+    {
+        return $this->wasSpent;
     }
 }

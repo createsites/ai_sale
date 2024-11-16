@@ -46,6 +46,10 @@
         <span class="text-red-500 text-sm">{{ $message }}</span>
         @enderror
 
+        @error('no_credits')
+        <span class="text-red-500">{{ $message }}</span>
+        @enderror
+
         @if ($response)
             <div id="chat_history" class="flex flex-col">
                 @foreach ($response as $message)
@@ -68,6 +72,8 @@
 @script
 <script>
     // событие обновления компонентов на странице
+    // отлавливаем его, чтобы задиспатчить свой customEvent,
+    // который поймаем в app.js и там подсветим синтаксис
     Livewire.hook('morph.updated', ({ el, component }) => {
         // ловим нужный элемент DOM с историей чата
         if (el.id === 'chat_history') {
@@ -77,6 +83,6 @@
             });
             document.dispatchEvent(customEvent);
         }
-    })
+    });
 </script>
 @endscript

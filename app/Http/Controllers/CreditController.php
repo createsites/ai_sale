@@ -20,8 +20,19 @@ class CreditController extends Controller
 
         // Логика обработки платежа
         $user = auth()->user();
-        $credit = Credit::firstOrCreate(['user_id' => $user->id]);
-        $credit->increment('amount', $request->amount);
+        $credit = $user->credits;
+        // если нет записи в базе о кредитах
+        if (!$credit) {
+            // создаем
+            Credit::create([
+                'user_id' => $user->id,
+                'amount' => $request->amount,
+           ]);
+        }
+        // иначе увеличиваем имеющуюся сумму
+        else {
+            $credit->increment('amount', $request->amount);
+        }
 
         return redirect(route('dashboard'))->with('success', 'Ваши кредиты успешно пополнены!');
     }

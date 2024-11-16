@@ -33,8 +33,9 @@
             @livewire('navigation-menu')
 
             <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <p>Баланс: {{ auth()->user()->credits->amount ?? 0 }} руб. </p>
+                <div x-data="balance"
+                     class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <p>Баланс: <span x-text="balance"></span> руб. </p>
                 </div>
             </header>
 
@@ -63,5 +64,34 @@
         @livewireScripts
 
     @yield('scripts')
+        <script>
+            // создаем Alpine компонент, задаем ему баланс
+            // навешиваем слушатель события обновления баланса, чтобы уменьшать при списывании
+            // событие инициируется из Chat Livewire Controller
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('balance', () => ({
+                    // при инициализации задаем баланс из php
+                    // это округленный баланс, он выводится на странице
+                    balance: {{
+                        auth()->user()->credits->amount
+                            ? round(auth()->user()->credits->amount, 2)
+                            : 0
+                        }},
+                    // неокругленное значение баланса, чтобы правильно считать
+                    realBalance: {{ auth()->user()->credits->amount ?? 0 }},
+                    init() {
+                        // событие обновления баланса
+                        // оно диспатчится в php в livewire компоненте Chat
+                        document.addEventListener('balance_updated', event => {
+                            // вычисляем новый баланс
+                            this.realBalance += event.detail.balanceChange;
+                            // меняем баланс в шапке
+                            // округляем до двух знаков после запятой
+                            this.balance = parseFloat(this.realBalance.toFixed(2));
+                        });
+                    },
+                }));
+            });
+        </script>
     </body>
 </html>

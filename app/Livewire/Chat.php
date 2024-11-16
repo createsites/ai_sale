@@ -41,6 +41,12 @@ class Chat extends Component
             'message' => 'required|string|max:255|min:2',
         ]);
 
+        // проверяем доступный баланс
+        if (!auth()->user()->credits || auth()->user()->credits->amount <= 0) {
+            $this->addError('no_credits', 'Недостаточно средств, пополните баланс.');
+            return false;
+        }
+
         // получаем ответ от ИИ
         $openAIService = new OpenAIService();
         // ему нужно каждый раз отправлять весь контекст в сообщении
@@ -66,10 +72,14 @@ class Chat extends Component
         }
 
         // списываем с баланса токены вопроса и ответа
-        PaymentService::spend([
+        $paymentService = new PaymentService();
+        $paymentService->spend([
             'input' => $response->getInputTokens(),
             'output' => $response->getOutputTokens()
         ]);
+
+        // отправляем событие для списания из компонента alpine
+        $this->dispatch('balance_updated', balanceChange: -1 * $paymentService->wasSpent());
 
         // сохраняем сообщение в базе
         $message = Message::create([
