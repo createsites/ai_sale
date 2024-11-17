@@ -43,7 +43,7 @@ class Chat extends Component
 
         // проверяем доступный баланс
         if (!auth()->user()->credits || auth()->user()->credits->amount <= 0) {
-            $this->addError('no_credits', 'Недостаточно средств, пополните баланс.');
+            $this->addError('common', 'Недостаточно средств, пополните баланс.');
             return false;
         }
 
@@ -66,7 +66,8 @@ class Chat extends Component
             $response = new OpenAiAdapter($openAiResponse);
         }
         else {
-            // todo выводить ошибку
+            // выводим ошибку от open ai
+            $this->addError('common', $openAIService->getError());
             logger($openAIService->getError());
             return false;
         }

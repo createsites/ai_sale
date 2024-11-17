@@ -46,7 +46,7 @@
         <span class="text-red-500 text-sm">{{ $message }}</span>
         @enderror
 
-        @error('no_credits')
+        @error('common')
         <span class="text-red-500">{{ $message }}</span>
         @enderror
 
