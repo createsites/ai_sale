@@ -1,33 +1,44 @@
-<div class="flex">
+<div class="flex flex-col md:flex-row">
     {{-- Левое меню с чатами --}}
-    <div class="w-1/4 p-4">
-        <h2 class="text-gray-700 text-lg font-bold mb-4">Чаты:</h2>
-        <a href="#" wire:click.prevent="createChat()"
-           class="block bg-blue-500 hover:bg-blue-600 text-white p-2 mb-3 text-center rounded">
-            Создать новый</a>
-        <ul>
-            @foreach ($chats as $index => $chat)
-                <li class="mb-2">
-                    @if ($currentChatId == $chat->id)
-                    <a href="#"
-                       class="border-indigo-400 border block bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded">
-                    @else
-                    <a href="#" wire:click.prevent="openChat({{ $chat->id }})"
-                       class="border block bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded">
-                    @endif
-                        @if ($chat->name)
-                            {{ $chat->name }}
+    <div x-data="{ open: window.innerWidth > 768 }"
+         x-init="
+            window.addEventListener('resize', () => {
+                open = window.innerWidth > 768;
+            });
+        "
+         class="md:w-1/4 p-4 relative">
+        <button @click="open = !open" class="absolute -top-5 right-5 md:hidden"
+            x-text="open ? 'Скрыть чаты' : 'Показать чаты'">
+        </button>
+        <div x-show="open">
+            <h2 class="text-gray-700 text-lg font-bold mb-4">Чаты:</h2>
+            <a href="#" wire:click.prevent="createChat()"
+               class="block bg-blue-500 hover:bg-blue-600 text-white p-2 mb-3 text-center rounded">
+                Создать новый</a>
+            <ul>
+                @foreach ($chats as $index => $chat)
+                    <li class="mb-2">
+                        @if ($currentChatId == $chat->id)
+                        <a href="#"
+                           class="border-indigo-400 border block bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded">
                         @else
-                            {{ $index ? 'Чат #' . $chat->id : 'Текущий чат' }}
+                        <a href="#" wire:click.prevent="openChat({{ $chat->id }})"
+                           class="border block bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded">
                         @endif
-                    </a>
-                </li>
-            @endforeach
-        </ul>
+                            @if ($chat->name)
+                                {{ $chat->name }}
+                            @else
+                                {{ $index ? 'Чат #' . $chat->id : 'Текущий чат' }}
+                            @endif
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     </div>
 
     {{-- Текущий чат --}}
-    <div class="w-3/4 bg-white p-6 rounded shadow-md">
+    <div class="md:w-3/4 bg-white p-6 rounded shadow-md">
         <div id="request_ai">
             <form wire:submit="sendMessage" class="mb-4">
                 @csrf
@@ -53,7 +64,7 @@
         @if ($response)
             <div id="chat_history" class="flex flex-col">
                 @foreach ($response as $message)
-                    <div class="@if (!$message->response_for)w-1/2 self-end rounded-tl-[15px] rounded-bl-[15px] rounded-br-[15px] bg-gray-100 border border-gray-300 @endif p-4 mt-4">
+                    <div class="@if (!$message->response_for)md:w-1/2 self-end rounded-tl-[15px] rounded-bl-[15px] rounded-br-[15px] bg-gray-100 border border-gray-300 @endif p-4 mt-4">
                         @if ($message->response_for)
                         <div class="response_ai">
                         @endif
