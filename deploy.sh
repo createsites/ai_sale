@@ -7,6 +7,9 @@ echo '>>> Обновляем код'
 cd $APP_DIR
 git pull origin master
 
+echo '>>> Устанавливаем зависимости composer'
+php composer.phar install --no-interaction --prefer-dist --optimize-autoloader
+
 echo '>>> Билдим docker образ и стартуем контейнер'
 ./vendor/bin/sail up --build -d
 
