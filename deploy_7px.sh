@@ -1,20 +1,20 @@
 #!/bin/bash
 
 # Путь к директории на сервере, куда нужно развернуть приложение
-APP_DIR=~/www/prostogpt.ru
+APP_DIR=~/www/prostogpt.alexarg.com
 
 echo '>>> Обновляем код'
 cd $APP_DIR
 git pull origin master
 
-echo '>>> Билдим docker образ и стартуем контейнер'
-./vendor/bin/sail up --build -d
+echo '>>> Устанавливаем зависимости composer'
+/opt/plesk/php/8.3/bin/php composer.phar install --no-dev --prefer-dist
 
 echo '>>> Применяем миграции'
-./vendor/bin/sail artisan migrate
+/opt/plesk/php/8.3/bin/php artisan migrate
 
 echo '>>> Установка npm зависимостей'
-./vendor/bin/sail npm ci
+npm ci
 
 echo '>>> Сборка vite'
-./vendor/bin/sail npm run build
+npm run build
