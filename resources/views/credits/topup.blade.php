@@ -1,4 +1,5 @@
 <x-app-layout>
+    @section('title', 'Пополнить баланс')
     <div class="py-12">
         <form action="{{ route('credits.process') }}" method="POST" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
             @csrf

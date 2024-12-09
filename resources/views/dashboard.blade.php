@@ -1,4 +1,5 @@
 <x-app-layout>
+    @section('title', 'Чат')
     <div class="py-12">
         <div class="max-w-7xl mx-auto pb-6 sm:px-6 lg:px-8">
             <livewire:chat />
