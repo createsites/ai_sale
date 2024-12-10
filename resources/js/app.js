@@ -1,8 +1,7 @@
 import './bootstrap';
 import { Marked } from 'marked';
 import { markedHighlight } from "marked-highlight";
-import hljs from 'highlight.js';
-import 'highlight.js/styles/github.css';
+let hljs;
 
 document.addEventListener("DOMContentLoaded", function () {
     // скрывать уведомления после небольшой задержки
@@ -54,7 +53,14 @@ const marked = new Marked(
 );
 
 // подсветка синтаксиса
-const highlightResponse = function(elem = document) {
+// при вызове этой функции лениво подгружается модуль подсветки
+const highlightResponse = async function(elem = document) {
+    // lazy loading of the highlight module
+    const hljsModule = await import('highlight.js');
+    hljs = hljsModule.default;
+    // and css for it
+    await import('highlight.js/styles/github.css');
+
     elem.querySelectorAll('.response_ai').forEach(function(elem) {
         // innerHTML заменяет символ > на &gt;
         // чтобы избежать этого, используем textContent
@@ -68,9 +74,5 @@ document.addEventListener('chat.updated', function(e) {
     // новый элемент чата приходит в событии
     const chatHistory = e.detail.elem;
     // подсвечиваем
-    // без задержки не работает
-    // querySelectorAll('.response_ai') не находит ничего
-    setTimeout(() => {
-        highlightResponse(chatHistory);
-    }, 100)
+    highlightResponse(chatHistory);
 });
