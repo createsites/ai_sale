@@ -19,6 +19,8 @@ class Chat extends Component
     public $chats;
     // для выделения текущего чата в списке
     public $currentChatId;
+    // статус кнопки отправить (активная или нет)
+    public $disableSendButton = false;
 
     public function mount()
     {
@@ -41,9 +43,14 @@ class Chat extends Component
             'message' => 'required|string|max:255|min:2',
         ]);
 
+        // деактивируем кнопку отправки сообщения
+        $this->disableSendButton = true;
+
         // проверяем доступный баланс
         if (!auth()->user()->credits || auth()->user()->credits->amount <= 0) {
             $this->addError('common', 'Недостаточно средств, пополните баланс.');
+            // активируем кнопку отправки сообщения
+            $this->disableSendButton = false;
             return false;
         }
 
@@ -69,6 +76,8 @@ class Chat extends Component
             // выводим ошибку от open ai
             $this->addError('common', $openAIService->getError());
             logger($openAIService->getError());
+            // активируем кнопку отправки сообщения
+            $this->disableSendButton = false;
             return false;
         }
 
@@ -103,6 +112,8 @@ class Chat extends Component
 
         // Очищаем поле после отправки
         $this->message = '';
+        // активируем кнопку отправки сообщения
+        $this->disableSendButton = false;
     }
 
     public function createChat()

@@ -45,7 +45,7 @@
                 <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Спроси у ИИ:</label>
                 <div class="flex items-center gap-3">
                     <input type="text" id="message" wire:model="message" required autocomplete="off" class="w-full p-2 border rounded shadow">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <button @if ($disableSendButton) disabled @endif type="submit" id="message_btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Отправить
                     </button>
                 </div>

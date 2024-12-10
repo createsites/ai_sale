@@ -28,3 +28,11 @@ ol li {
 ol li::marker {
     color: indigo;
 }
+
+#message_btn:disabled {
+    background-color: #7096D5;
+}
+
+#message_btn:not(:disabled):active {
+    transform: translateY(1px);
+}
