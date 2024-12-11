@@ -60,7 +60,7 @@
         <button class="cta-button">Использовать бесплатно</button>
     </div>
     <div class="hero-image">
-        <img src="{{ Vite::asset('resources/images/photo.png') }}" alt="AI Interface">
+        <img src="{{ asset('images/photo.png') }}" alt="AI Interface">
     </div>
 </section>
 
@@ -70,10 +70,10 @@
         <div class="columns">
             <div class="left-column">
                 <div class="icons">
-                    <img src="{{ Vite::asset('resources/images/icon1.png') }}" alt="ChatGPT" />
-                    <img src="{{ Vite::asset('resources/images/icon2.png') }}" alt="SomeOtherAI" />
-                    <img src="{{ Vite::asset('resources/images/icon3.png') }}" alt="SomeAI" />
-                    <img src="{{ Vite::asset('resources/images/icon4.png') }}" alt="DALL-E" />
+                    <img src="{{ asset('images/icon1.png') }}" alt="ChatGPT" />
+                    <img src="{{ asset('images/icon2.png') }}" alt="SomeOtherAI" />
+                    <img src="{{ asset('images/icon3.png') }}" alt="SomeAI" />
+                    <img src="{{ asset('images/icon4.png') }}" alt="DALL-E" />
                 </div>
                 <ul class="cons-list">
                     <li><span class="cross">
@@ -92,7 +92,7 @@
             </div>
             <div class="right-column">
                 <div class="chad-logo">
-                    <img src="{{ Vite::asset('resources/images/chad-logo.png') }}" alt="AI logo"/>
+                    <img src="{{ asset('images/chad-logo.png') }}" alt="AI logo"/>
                 </div>
                 <ul class="pros-list">
                     <li><span class="check">
@@ -119,27 +119,27 @@
     <section class="features-section">
         <div class="features-grid">
             <div class="feature-card">
-                <img src="{{ Vite::asset('resources/images/create-content-icon.svg') }}" alt="Создайте контент" />
+                <img src="{{ asset('images/create-content-icon.svg') }}" alt="Создайте контент" />
                 <h3>Создайте контент</h3>
                 <p>Генерируйте тексты, статьи, сценарии, рекламные слоганы и многое другое за считанные секунды</p>
             </div>
             <div class="feature-card">
-                <img src="{{ Vite::asset('resources/images/save-time-icon.svg') }}" alt="Экономьте время" />
+                <img src="{{ asset('images/save-time-icon.svg') }}" alt="Экономьте время" />
                 <h3>Экономьте время</h3>
                 <p>Автоматизируйте рутинные задачи и сосредоточьтесь на творчестве и развитии бизнеса</p>
             </div>
             <div class="feature-card">
-                <img src="{{ Vite::asset('resources/images/learn-icon.svg') }}" alt="Обучайтесь" />
+                <img src="{{ asset('images/learn-icon.svg') }}" alt="Обучайтесь" />
                 <h3>Используйте в учебе</h3>
                 <p>Ищите любую информацию, решайте тесты, создавайте рефераты в один клик</p>
             </div>
             <div class="feature-card">
-                <img src="{{ Vite::asset('resources/images/support-icon.svg') }}" alt="Поддержка" />
+                <img src="{{ asset('images/support-icon.svg') }}" alt="Поддержка" />
                 <h3>Создавайте код</h3>
                 <p>Редактируйте и создавайте любой код, учитесь новому и исправляйте ошибки</p>
             </div>
             <div class="feature-card">
-                <img src="{{ Vite::asset('resources/images/text-icon.svg') }}" alt="Поддержка" />
+                <img src="{{ asset('images/text-icon.svg') }}" alt="Поддержка" />
                 <h3>Улучшайте текст</h3>
                 <p>Редактируйте любой текст, увеличивайте оригинальность, создавайте лучший текст под любые задачи</p>
             </div>
