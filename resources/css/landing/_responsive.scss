@@ -1,0 +1,117 @@
+// Минимальная ширина для мобильной версии
+@media (max-width: 640px) {
+
+    body {
+        margin-top: 0;
+    }
+
+    h2 {
+        font-size: 45px;
+    }
+
+    .header {
+        display: none;
+    }
+
+    .hero {
+        flex-direction: column;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        .hero-content {
+            max-width: 100%;
+
+            h1 {
+                font-size: 2.4rem;
+                text-align: center;
+                margin: 0 auto;
+            }
+        }
+    }
+
+    // 3. Картинка под заголовком: на всю ширину экрана
+    .hero-image img {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    // 4. Текст под картинкой: на всю ширину экрана
+    .hero-content p {
+        font-size: 1rem;
+        text-align: center;
+        width: 100%;
+    }
+
+    // 5. Кнопка под текстом: центрируем и делаем на всю ширину экрана
+    .cta-button {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        margin: 20px auto;
+        font-size: 1rem;
+        padding: 15px;
+    }
+
+    // 6. Заголовок h2 "Как работает ProstoGPT?": на всю ширину экрана
+    .how-it-works h2 {
+        font-size: 2rem;
+        text-align: center;
+        width: 100%;
+    }
+
+    // Центрированный текстовый блок
+    .center-column {
+        text-align: center;
+        width: 100%;
+        padding: 10px;
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    // 6. Блоки left-column и right-column: располагаем по всей ширине
+    .columns {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .left-column, .right-column {
+        width: 100%;
+        text-align: center;
+    }
+
+    // 7. Блок feature-card: разбиваем по 2 карточки в ряд
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); // две карточки в ряд
+        gap: 15px;
+    }
+
+    // 8. Сетка отзывов review-grid: разбиваем по 2 карточки в ряд
+    .review-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); // две карточки в ряд
+        gap: 15px;
+    }
+
+    // Оптимизация текста внутри карточек и отзывов
+    .feature-card, .review {
+        padding: 10px;
+        h3 {
+            font-size: 1.1rem;
+        }
+        p {
+            font-size: 0.9rem;
+        }
+    }
+
+    .cons-list, .pros-list {
+        text-align: left;
+    }
+
+    .community {
+        padding-top: 0;
+    }
+}
