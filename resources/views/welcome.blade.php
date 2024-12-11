@@ -60,7 +60,7 @@
         <button class="cta-button">Использовать бесплатно</button>
     </div>
     <div class="hero-image">
-        <img src="{{ asset('images/photo.png') }}" alt="AI Interface">
+        <img src="{{ asset('images/photo.jpg') }}" alt="AI Interface">
     </div>
 </section>
 
