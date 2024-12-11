@@ -13,10 +13,15 @@
         display: none;
     }
 
+    .auth_block {
+        padding-top: 30px;
+    }
+
     .hero {
         flex-direction: column;
         padding-left: 20px;
         padding-right: 20px;
+        padding-top: 30px;
 
         .hero-content {
             max-width: 100%;

@@ -11,42 +11,11 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 
-        <!-- Styles / Scripts -->
-        @vite(['resources/css/landing/style.scss', 'resources/js/landing/main.js'])
     </head>
 
     <body class="font-sans antialiased dark:bg-black dark:text-white/50">
 
 <div style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><symbol viewBox="0 0 24 24" xml:space="preserve" id="check-icon" xmlns="http://www.w3.org/2000/svg"><path d="M18.3 6.3 9.1 16.4l-2.3-3c-.3-.4-1-.5-1.4-.2-.4.3-.5 1-.2 1.4l3 4c.2.2.5.4.8.4.3 0 .5-.1.7-.3l10-11c.4-.4.3-1-.1-1.4-.3-.4-1-.4-1.3 0z"/></symbol><symbol viewBox="0 0 24 24" xml:space="preserve" id="cross-icon" xmlns="http://www.w3.org/2000/svg"><path d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z"/></symbol></svg></div>
-
-{{--@if (Route::has('login'))--}}
-{{--    <nav class="-mx-3 flex flex-1 justify-end">--}}
-{{--        @auth--}}
-{{--            <a--}}
-{{--                href="{{ url('/dashboard') }}"--}}
-{{--                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"--}}
-{{--            >--}}
-{{--                Dashboard--}}
-{{--            </a>--}}
-{{--        @else--}}
-{{--            <a--}}
-{{--                href="{{ route('login') }}"--}}
-{{--                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"--}}
-{{--            >--}}
-{{--                Log in--}}
-{{--            </a>--}}
-
-{{--            @if (Route::has('register'))--}}
-{{--                <a--}}
-{{--                    href="{{ route('register') }}"--}}
-{{--                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"--}}
-{{--                >--}}
-{{--                    Register--}}
-{{--                </a>--}}
-{{--            @endif--}}
-{{--        @endauth--}}
-{{--    </nav>--}}
-{{--@endif--}}
 
 <header class="header">
     <nav class="nav">
@@ -56,6 +25,34 @@
         <a href="#faq">FAQ</a>
     </nav>
 </header>
+@if (Route::has('login'))
+    <nav class="auth_block">
+        @auth
+            <a
+                href="{{ url('/dashboard') }}"
+                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+            >
+                Перейти к чату
+            </a>
+        @else
+            <a
+                href="{{ route('login') }}"
+                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+            >
+                Войти
+            </a>
+
+            @if (Route::has('register'))
+                <a
+                    href="{{ route('register') }}"
+                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                >
+                    Регистрация
+                </a>
+            @endif
+        @endauth
+    </nav>
+@endif
 <section class="hero">
     <div class="hero-content">
         <h1>ChatGPT на русском и другие нейросети</br> в одном сервисе</h1>
@@ -249,6 +246,10 @@
 <footer class="footer">
     <p>© {{ date('Y') }} {{ config('app.name') }}</p>
 </footer>
+
+
+<!-- Styles / Scripts -->
+@vite(['resources/css/landing/style.scss', 'resources/js/landing/main.js'])
 
     </body>
 </html>

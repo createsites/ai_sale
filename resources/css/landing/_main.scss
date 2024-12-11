@@ -7,7 +7,7 @@ body {
     font-style: normal;
     background-color: #1d1d1d;
     color: #fff;
-    margin-top: 50px;
+    margin: 0;
     padding: 0;
 }
 
@@ -22,11 +22,10 @@ h2 {
     justify-content: space-around;
     padding: 25px;
     background-color: rgba(29, 29, 29, 0.5); /* Сделали фон более прозрачным */
-    position: fixed; /* Закрепляем панель в верхней части экрана */
+    position: sticky;
     top: 0;
     left: 0;
-    width: 100%;
-    z-index: 1000; /* Обеспечиваем, чтобы панель была поверх контента */
+    z-index: 100;
     backdrop-filter: blur(7px); /* Эффект размытия фона */
     transition: background-color 0.3s ease, backdrop-filter 0.3s ease; /* Плавное изменение */
 }
@@ -40,11 +39,24 @@ h2 {
     font-size: 20px;
 }
 
+.auth_block {
+    display: flex;
+    justify-content: end;
+    gap: 1.5em;
+    padding: 20px 40px 30px 40px;
+
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+}
+
 .hero {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 40px;
+    padding: 0 40px 40px 40px;
+    gap: 30px;
 }
 
 .hero-content {
